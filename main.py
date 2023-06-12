@@ -25,6 +25,7 @@ def cantidad_filmaciones_mes( mes ):
         mes = 'septiembre'
     if mes in ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']:
         respuesta = estrenos_por_mes[estrenos_por_mes.mes == mes].iloc[0,1]
+        respuesta = int(respuesta)
 
     else:
         respuesta = 'Ud. ingreso: ' + mes + '. Por favor, ingrese el nombre del mes que desea consultar en español'
@@ -48,6 +49,7 @@ def cantidad_filmaciones_dia( dia ):
     
     if dia in ['lunes','martes','miércoles','jueves', 'viernes', 'sábado', 'domingo']:
         respuesta  = estrenos_por_dia[estrenos_por_dia.dia == dia].iloc[0,1]
+        respuesta = int(respuesta)
 
     else:
         respuesta = 'Ud. ingreso: ' + dia + '. Por favor, ingrese el nombre del dia que desea consultar en español'
