@@ -60,17 +60,17 @@ def cantidad_filmaciones_dia( dia ):
 @app.get('/score_titulo/{titulo}')
 def score_titulo( titulo_de_la_filmación ): 
 
-    # REVISAR .str.contains !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     '''
     Se ingresa el título de una filmación esperando como respuesta el título, el año de estreno y el score.
     Ejemplo de retorno: La película X fue estrenada en el año X con un score/popularidad de X
     '''
     pelis = (
         movies[movies['title']
-        .str.contains(titulo_de_la_filmación, case=False)]
+        == titulo_de_la_filmación.title()]
         [['title','release_year','popularity']]
         )
+    
+
 
     titulos = pelis['title'].tolist()
     anios = pelis['release_year'].tolist()
@@ -92,7 +92,7 @@ def votos_titulo( titulo_de_la_filmación ):
     '''
     pelis = (
         movies[movies['title']
-        .str.contains(titulo_de_la_filmación, case=False)]
+        == titulo_de_la_filmación.title()]
         [['title','release_year','vote_count','vote_average']]
         )
 
@@ -114,6 +114,7 @@ def votos_titulo( titulo_de_la_filmación ):
     out= tuple(out)  
 
     return {out}  
+      
 
 
 #5
