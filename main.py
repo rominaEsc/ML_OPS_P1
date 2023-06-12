@@ -19,7 +19,7 @@ def cantidad_filmaciones_mes( mes ):
     Se ingresa un mes en idioma Español. Debe devolver la cantidad de películas que fueron estrenadas en el mes consultado en la totalidad del dataset.
     Ejemplo de retorno: X cantidad de películas fueron estrenadas en el mes de X
     '''
-    mes = mes.lower()
+    mes = mes.lower().strip()
 
     if mes == 'setiembre':
         mes = 'septiembre'
@@ -39,7 +39,7 @@ def cantidad_filmaciones_dia( dia ):
     Ejemplo de retorno: X cantidad de películas fueron estrenadas en los días X
     '''
     # ver como hacer poara que solo admita strings
-    dia = dia.lower()
+    dia = dia.lower().strip()
 
     if dia in ['miercoles','mièrcoles']:
         dia = 'miércoles'
@@ -66,7 +66,7 @@ def score_titulo( titulo_de_la_filmación ):
     '''
     pelis = (
         movies[movies['title']
-        == titulo_de_la_filmación.title()]
+        == titulo_de_la_filmación.title().strip()]
         [['title','release_year','popularity']]
         )
     
@@ -92,7 +92,7 @@ def votos_titulo( titulo_de_la_filmación ):
     '''
     pelis = (
         movies[movies['title']
-        == titulo_de_la_filmación.title()]
+        == titulo_de_la_filmación.title().strip()]
         [['title','release_year','vote_count','vote_average']]
         )
 
@@ -126,7 +126,7 @@ def get_actor( nombre_actor ):
     Ejemplo de retorno: El actor X ha participado de X cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación
     '''
     
-    id_actor = actors[actors.name == nombre_actor].iloc[0,0]
+    id_actor = actors[actors.name == nombre_actor.strip()].iloc[0,0]
 
     df = (
         pd.merge(
@@ -142,7 +142,9 @@ def get_actor( nombre_actor ):
 
     promedio = df.revenue.mean().round(2)
 
-    return {'actor':nombre_actor, 'cantidad_filmaciones':cantidad, 'retorno_total':ganancia_total, 'retorno_promedio':promedio}
+    data = {'actor':nombre_actor, 'cantidad_filmaciones':cantidad, 'retorno_total':ganancia_total, 'retorno_promedio':promedio}
+
+    return data
 
 
 #6
@@ -152,7 +154,7 @@ def get_director( nombre_director ):
     Se ingresa el nombre de un director que se encuentre dentro de un dataset debiendo devolver el éxito del mismo medido a través del retorno. 
     Además, deberá devolver el nombre de cada película con la fecha de lanzamiento, retorno individual, costo y ganancia de la misma.
     '''
-    id_director = directors[directors.name == nombre_director].iloc[0,0]
+    id_director = directors[directors.name == nombre_director.strip()].iloc[0,0]
 
     df = (
         pd.merge(
