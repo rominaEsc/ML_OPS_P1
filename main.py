@@ -181,3 +181,36 @@ def get_director( nombre_director ):
         'revenue_pelicula':revenue_peliculas}
 
     return data
+
+# ML
+
+# Instanciamos el CV
+vectorizer = CountVectorizer()
+stopwords = STOPWORDS
+# eliminamos las "stop words", palabras comunes no informativas
+tf = TfidfVectorizer(stop_words='english')
+
+# calculamos los features para cada ítem (texto)
+tfidf_matrix = tf.fit_transform(df['text'])
+
+# calculamos las similitudes entre todos los documentos
+cosine_similarities = linear_kernel(tfidf_matrix, tfidf_matrix)
+n = 5
+
+results = {} 
+for idx, row in df.iterrows():
+    # guardamos los indices similares basados en la similitud coseno. Los ordenamos en modo ascendente, siendo 0 nada de similitud y 1 total
+    similar_indices = cosine_similarities[idx].argsort()[:-n-2:-1] 
+    # guardamos los N más cercanos
+    similar_items = [(f"{df.loc[i, 'title']}") for i in similar_indices]
+    results[f"{row['title']}"] = similar_items[1:]
+
+
+@app.get('/recomendacion/{titulo}')
+def recomendacion(titulo:str):
+    '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
+
+    titulo = titulo.title().strip()
+    lista = (results[titulo])
+    
+    return {'lista recomendada': lista}
