@@ -65,6 +65,7 @@ def cantidad_filmaciones_dia( dia ):
 @app.get('/score_titulo/{titulo}')
 def score_titulo( titulo_de_la_filmación ): 
 
+
     '''
     Se ingresa el título de una filmación esperando como respuesta el título, el año de estreno y el score.
     Ejemplo de retorno: La película X fue estrenada en el año X con un score/popularidad de X
