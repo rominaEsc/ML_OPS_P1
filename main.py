@@ -89,12 +89,13 @@ def score_titulo( titulo_de_la_filmación ):
     return {'titulo':titulos, 'anio':anios, 'popularidad':popularidad}
 
 #4
+
 @app.get('/votos_titulo/{titulo}')
 def votos_titulo( titulo_de_la_filmación ): 
     ''' Se ingresa el título de una filmación esperando como respuesta el título, la cantidad de votos y el valor promedio de las votaciones. 
     La misma variable deberá de contar con al menos 2000 valoraciones, 
     caso contrario, debemos contar con un mensaje avisando que no cumple esta condición y que por ende, no se devuelve ningun valor.
-    Ejemplo de retorno: La película X fue estrenada en el año X. La misma cuenta con un total de X valoraciones, con un promedio de X
+    Ejemplo de retorno: La película X fue estrenada en el año X. La misma cuenta con un total de X valoraciones, con un promedio de X.
     '''
 
     pelis = movies[['title','release_year','vote_count','vote_average']][movies['vote_count'] > 2000]
