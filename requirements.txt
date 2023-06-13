@@ -2,3 +2,8 @@ fastapi
 numpy
 pandas
 uvicorn
+wordcloud
+matplotlib.pyplot
+sklearn.feature_extraction.text
+sklearn.metrics.pairwise
+pprint
