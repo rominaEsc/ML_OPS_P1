@@ -132,24 +132,30 @@ def get_actor( nombre_actor ):
     Ejemplo de retorno: El actor X ha participado de X cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación
     '''
     
-    id_actor = actors[actors.name == nombre_actor.title().strip()].iloc[0,0]
 
-    df = (
-        pd.merge(
-            actors[actors['id_actor'] == id_actor],
-            movies[['id_movie','title','revenue']],
-            on='id_movie', 
-            how='inner')
-        )
+    if actors['name'].str.contains(nombre_actor).any():
     
-    cantidad = df.shape[0] 
+        id_actor = actors[actors.name == nombre_actor.title().strip()].iloc[0,0]
 
-    ganancia_total = df.revenue.sum()
+        df = (
+            pd.merge(
+                actors[actors['id_actor'] == id_actor],
+                movies[['id_movie','title','revenue']],
+                on='id_movie', 
+                how='inner')
+            )
+        
+        cantidad = df.shape[0] 
 
-    promedio = df.revenue.mean().round(2)
+        ganancia_total = int(df.revenue.sum())
 
-    data = {'actor':nombre_actor, 'cantidad_filmaciones':cantidad, 'retorno_total':ganancia_total, 'retorno_promedio':promedio}
+        promedio = int(df.revenue.mean().round(2))
 
+        data = {'actor':nombre_actor, 'cantidad_filmaciones':cantidad, 'retorno_total':ganancia_total, 'retorno_promedio':promedio}
+
+    else:
+        mensaje = "El actor {} no se encuentra en la base de datos.".format(nombre_actor)
+        data = {'actor':[mensaje] }
     return data
 
 #6
