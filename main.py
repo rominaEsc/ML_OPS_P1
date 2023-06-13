@@ -131,9 +131,8 @@ def get_actor( nombre_actor ):
     Además, la cantidad de películas que en las que ha participado y el promedio de retorno. La definición no deberá considerar directores.
     Ejemplo de retorno: El actor X ha participado de X cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación
     '''
-    
 
-    if actors['name'].str.contains(nombre_actor).any():
+    if (actors == nombre_actor).any().any():
     
         id_actor = actors[actors.name == nombre_actor.title().strip()].iloc[0,0]
 
@@ -154,9 +153,11 @@ def get_actor( nombre_actor ):
         data = {'actor':nombre_actor, 'cantidad_filmaciones':cantidad, 'retorno_total':ganancia_total, 'retorno_promedio':promedio}
 
     else:
-        mensaje = "El actor {} no se encuentra en la base de datos.".format(nombre_actor)
-        data = {'actor':[mensaje] }
-    return data
+        mensaje = 'El actor {} no se encuentra en la base de datos.'.format(nombre_actor)
+        
+        data = { mensaje }
+    return data   
+
 
 #6
 @app.get('/get_director/{nombre_director}')
